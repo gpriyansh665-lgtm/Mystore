@@ -3,112 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAKU YT STORE | OFFICIAL</title>
+    <title>DAKU YT STORE | PREMIUM</title>
     <style>
-        :root { --bg: #0b1019; --card: #161b22; --blue: #38a1f3; --green: #00ff00; --modal-bg: #f8f9f5; }
-        body { background-color: var(--bg); color: white; font-family: sans-serif; margin: 0; padding: 15px; }
+        :root { --bg: #0b1019; --card: #161b22; --blue: #38a1f3; --green: #00ff00; --modal-bg: #ffffff; }
+        
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+
+        body { 
+            background-color: var(--bg); color: white; font-family: sans-serif; 
+            margin: 0; padding: 15px; overflow-x: hidden;
+        }
+
+        /* --- Loading Screen Animation --- */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 999; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            width: 50px; height: 50px; border: 5px solid #161b22;
+            border-top: 5px solid var(--blue); border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- Entrance & Bounce Animations --- */
+        .bounce-in { animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
 
         /* Header Branding */
-        .store-header { text-align: center; padding: 15px 0; border-bottom: 2px solid var(--blue); margin-bottom: 15px; }
-        .store-title { color: var(--blue); font-size: 1.8rem; font-weight: bold; text-shadow: 0 0 10px var(--blue); margin: 0; }
+        .store-header { text-align: center; padding: 20px 0; border-bottom: 2px solid var(--blue); margin-bottom: 15px; }
+        .store-title { color: var(--blue); font-size: 1.8rem; font-weight: bold; text-shadow: 0 0 15px var(--blue); margin: 0; }
 
-        /* --- Main Page Selector (Guild Glory vs Auto Like) --- */
+        /* Navigation Tabs */
         .page-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; padding: 15px; border-radius: 12px; border: 1px solid #30363d; background: var(--card); color: #8b949e; cursor: pointer; font-weight: bold; text-align: center; font-size: 0.8rem; }
-        .tab-btn.active { background: #1f2937; color: white; border: 1px solid var(--blue); box-shadow: 0 0 15px rgba(56, 161, 243, 0.2); }
+        .tab-btn { 
+            flex: 1; padding: 15px; border-radius: 12px; border: 1px solid #30363d; 
+            background: var(--card); color: #8b949e; cursor: pointer; font-weight: bold; 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .tab-btn.active { background: #1f2937; color: white; border-color: var(--blue); transform: scale(1.05); }
 
-        /* Pop-up Selectors (Region & Payment) */
-        .selectors { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-        .select-trigger { background: var(--card); border: 1px solid #30363d; border-radius: 10px; padding: 12px; font-size: 0.85rem; position: relative; cursor: pointer; }
-        .label { position: absolute; top: -8px; left: 10px; background: var(--bg); padding: 0 5px; font-size: 0.6rem; color: #8b949e; font-weight: bold; }
-
-        /* Plans Content */
+        /* Plan Cards with Hover Bounce */
         .content-page { display: none; }
         .content-page.active { display: block; }
-        .plan-card { background: var(--card); border-radius: 18px; padding: 18px; margin-bottom: 12px; border: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
-        .price { font-size: 1.2rem; font-weight: bold; }
-        .buy-btn { background: #0088cc; color: white; padding: 7px 15px; border-radius: 8px; text-decoration: none; font-size: 0.75rem; font-weight: bold; display: inline-block; }
+        .plan-card { 
+            background: var(--card); border-radius: 18px; padding: 18px; margin-bottom: 15px; 
+            border: 1px solid #30363d; display: flex; justify-content: space-between; 
+            align-items: center; transition: 0.3s ease;
+        }
+        .plan-card:hover { transform: translateY(-5px); border-color: var(--blue); box-shadow: 0 5px 15px rgba(56, 161, 243, 0.2); }
 
-        /* Modals (Pop-ups) */
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 100; }
-        .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--modal-bg); color: black; width: 85%; max-width: 350px; border-radius: 25px; padding: 10px; z-index: 200; }
-        .modal-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #ddd; cursor: pointer; }
-        .radio-dot { width: 18px; height: 18px; border: 2px solid #555; border-radius: 50%; }
+        /* Selectors & Modals (Same as before but smoother) */
+        .selectors { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .select-trigger { background: var(--card); border: 1px solid #30363d; border-radius: 10px; padding: 12px; position: relative; cursor: pointer; }
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; backdrop-filter: blur(5px); }
+        .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--modal-bg); color: black; width: 85%; max-width: 350px; border-radius: 25px; padding: 10px; z-index: 200; animation: modalPop 0.4s ease; }
+        @keyframes modalPop { from { transform: translate(-50%, -40%) scale(0.8); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
+        
+        .buy-btn { background: #0088cc; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; }
     </style>
 </head>
-<body>
+<body onload="hideLoader()">
 
-    <div class="store-header">
+    <div id="loader">
+        <div class="spinner"></div>
+        <p style="margin-top: 15px; color: var(--blue); font-weight: bold;">DAKU YT STORE LOADING...</p>
+    </div>
+
+    <div class="store-header bounce-in">
         <h1 class="store-title">DAKU YT STORE</h1>
     </div>
 
-    <div class="page-tabs">
+    <div class="page-tabs bounce-in">
         <div id="tab-glory" class="tab-btn active" onclick="switchPage('glory')">🤖 GUILD GLORY</div>
         <div id="tab-likes" class="tab-btn" onclick="switchPage('likes')">💖 AUTO LIKES</div>
     </div>
 
-    <div class="selectors">
-        <div class="select-trigger" onclick="openModal('regionModal')">
-            <span class="label">REGION</span>
-            <span id="currentRegion">🇮🇳 INDIA</span>
-        </div>
-        <div class="select-trigger" onclick="openModal('paymentModal')">
-            <span class="label">PAYMENT</span>
-            <span id="currentPayment">UPI (Ind)</span>
-        </div>
+    <div class="selectors bounce-in">
+        <div class="select-trigger" onclick="openModal('regionModal')"><span id="currentRegion">🌍 ALL REGION</span></div>
+        <div class="select-trigger" onclick="openModal('paymentModal')"><span id="currentPayment">UPI (Ind)</span></div>
     </div>
 
-    <div id="glory-page" class="content-page active">
-        <div class="plan-card">
-            <div><h3>Mini Glory</h3><p>200k Glory Boost</p></div>
-            <div style="text-align:right;"><span class="price">₹200</span><br><a href="https://t.me/YOUR_TELEGRAM" class="buy-btn">BUY DM</a></div>
-        </div>
-        <div class="plan-card">
-            <div><h3>Mega Glory</h3><p>1M Glory Boost</p></div>
-            <div style="text-align:right;"><span class="price">₹1000</span><br><a href="https://t.me/YOUR_TELEGRAM" class="buy-btn">BUY DM</a></div>
-        </div>
+    <div id="glory-page" class="content-page active bounce-in">
+        <div class="plan-card"><div><h3>Mini Glory</h3><p>200k Glory Boost</p></div><div style="text-align:right;"><b>₹200</b><br><a href="https://t.me/DAKU_YT_1M" class="buy-btn">ORDER</a></div></div>
+        <div class="plan-card"><div><h3>Mega Glory</h3><p>1M Glory Boost</p></div><div style="text-align:right;"><b>₹1000</b><br><a href="https://t.me/DAKU_YT_1M" class="buy-btn">ORDER</a></div></div>
     </div>
 
-    <div id="likes-page" class="content-page">
-        <div class="plan-card">
-            <div><h3>Weekly Starter</h3><p>1540 Total Likes</p></div>
-            <div style="text-align:right;"><span class="price">₹100</span><br><a href="https://t.me/YOUR_TELEGRAM" class="buy-btn">BUY DM</a></div>
-        </div>
-        <div class="plan-card">
-            <div><h3>Elite Monthly</h3><p>6600 Total Likes</p></div>
-            <div style="text-align:right;"><span class="price">₹300</span><br><a href="https://t.me/YOUR_TELEGRAM" class="buy-btn">BUY DM</a></div>
-        </div>
+    <div id="likes-page" class="content-page bounce-in">
+        <div class="plan-card"><div><h3>Elite Monthly</h3><p>6600 Total Likes</p></div><div style="text-align:right;"><b>₹300</b><br><a href="https://t.me/DAKU_YT_1M" class="buy-btn">ORDER</a></div></div>
     </div>
 
     <div class="overlay" id="overlay" onclick="closeAll()"></div>
     <div class="modal" id="regionModal">
-        <div class="modal-item" onclick="selectRegion('🇧🇷 BRAZIL')"><span>🇧🇷 BRAZIL</span><span class="radio-dot"></span></div>
-        <div class="modal-item" onclick="selectRegion('🇺🇸 USA')"><span>🇺🇸 USA</span><span class="radio-dot"></span></div>
-        <div class="modal-item" onclick="selectRegion('🇮🇳 INDIA')"><span>🇮🇳 INDIA</span><span class="radio-dot"></span></div>
+        <div style="padding:15px; font-weight:bold; border-bottom:1px solid #eee;">SELECT REGION</div>
+        <div style="padding:15px; cursor:pointer;" onclick="selectRegion('🌍 ALL REGION')">🌍 ALL REGION</div>
+        <div style="padding:15px; cursor:pointer;" onclick="selectRegion('🇮🇳 INDIA')">🇮🇳 INDIA</div>
     </div>
     <div class="modal" id="paymentModal">
-        <div class="modal-item" onclick="selectPayment('UPI (Ind)')"><span>UPI (Ind)</span><span class="radio-dot"></span></div>
-        <div class="modal-item" onclick="selectPayment('BINANCE ($)')"><span>BINANCE ($)</span><span class="radio-dot"></span></div>
+        <div style="padding:15px; font-weight:bold; border-bottom:1px solid #eee;">SELECT PAYMENT</div>
+        <div style="padding:15px; cursor:pointer;" onclick="selectPayment('UPI (Ind)')">UPI (Ind)</div>
     </div>
 
     <script>
+        function hideLoader() { 
+            setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1000); 
+        }
+
         function switchPage(page) {
-            document.getElementById('glory-page').style.display = (page === 'glory') ? 'block' : 'none';
-            document.getElementById('likes-page').style.display = (page === 'likes') ? 'block' : 'none';
-            document.getElementById('tab-glory').classList.toggle('active', page === 'glory');
-            document.getElementById('tab-likes').classList.toggle('active', page === 'likes');
+            // Show Loader again for 0.5s for "smooth" feel
+            document.getElementById('loader').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('glory-page').classList.remove('active');
+                document.getElementById('likes-page').classList.remove('active');
+                document.getElementById('tab-glory').classList.remove('active');
+                document.getElementById('tab-likes').classList.remove('active');
+
+                if(page === 'glory') {
+                    document.getElementById('glory-page').classList.add('active', 'bounce-in');
+                    document.getElementById('tab-glory').classList.add('active');
+                } else {
+                    document.getElementById('likes-page').classList.add('active', 'bounce-in');
+                    document.getElementById('tab-likes').classList.add('active');
+                }
+            }, 500);
         }
-        function openModal(id) {
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById(id).style.display = 'block';
-        }
-        function closeAll() {
-            document.getElementById('overlay').style.display = 'none';
-            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        }
+
+        function openModal(id) { document.getElementById('overlay').style.display = 'block'; document.getElementById(id).style.display = 'block'; }
+        function closeAll() { document.getElementById('overlay').style.display = 'none'; document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function selectRegion(val) { document.getElementById('currentRegion').innerText = val; closeAll(); }
         function selectPayment(val) { document.getElementById('currentPayment').innerText = val; closeAll(); }
     </script>
 </body>
-                                                                                                              </html>
-                                                                                                              
+        </html>
+        
