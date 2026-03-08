@@ -3,184 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAKU YT 1M | Pro Store</title>
+    <title>DAKU YT 1M | FF AUTOMATION</title>
     <style>
-        :root {
-            --bg-dark: #0d1117;
-            --card-bg: #161b22;
-            --neon-blue: #58a6ff;
-            --neon-green: #238636;
-            --text-gold: #f0883e;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: #c9d1d9;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .header {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #30363d;
-        }
-
-        .brand { font-weight: bold; color: var(--neon-blue); font-size: 1.2rem; }
+        :root { --bg: #0b0f15; --card: #161b22; --blue: #58a6ff; --green: #238636; --gold: #f0883e; --tele: #0088cc; }
+        body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; padding: 15px; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
         
-        .nav-tabs {
-            display: flex;
-            gap: 10px;
-            margin: 20px 0;
-            width: 100%;
-            max-width: 500px;
-            overflow-x: auto;
-        }
+        /* Navigation Tabs */
+        .main-tabs { display: flex; gap: 10px; margin: 20px 0; }
+        .tab-btn { flex: 1; padding: 15px; border-radius: 12px; border: 1px solid #30363d; background: var(--card); color: #8b949e; cursor: pointer; font-weight: bold; text-align: center; font-size: 0.8rem; }
+        .tab-btn.active { background: #1f2937; color: white; border: 1px solid var(--blue); box-shadow: 0 0 15px rgba(88, 166, 255, 0.2); }
 
-        .tab {
-            background: var(--card-bg);
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            border: 1px solid #30363d;
-            flex: 1;
-            text-align: center;
-        }
-
-        .tab.active { background: var(--neon-blue); color: white; border: none; }
-
-        .service-section {
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 25px;
-        }
-
-        .section-title { color: var(--text-gold); font-size: 0.9rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-
-        .plan-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #30363d;
-            transition: 0.3s;
-        }
-
-        .plan-card:hover { border-color: var(--neon-blue); transform: scale(1.02); }
-
-        .plan-info h3 { margin: 0; font-size: 1rem; color: #fff; }
-        .plan-info p { margin: 5px 0 0; font-size: 0.75rem; color: #8b949e; }
-
+        /* Content Sections */
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        
+        .plan-card { background: var(--card); border-radius: 15px; padding: 15px; margin-bottom: 12px; border: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
+        .details h3 { margin: 0; font-size: 1rem; color: #fff; }
+        .details p { margin: 5px 0 0; font-size: 0.75rem; color: #00ff00; font-weight: bold; }
+        
         .price-tag { text-align: right; }
-        .price { font-weight: bold; color: #fff; font-size: 1.1rem; }
-        .buy-btn {
-            display: inline-block;
-            margin-top: 5px;
-            padding: 5px 12px;
-            background: var(--neon-green);
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 0.7rem;
-        }
+        .price { font-size: 1.1rem; font-weight: bold; color: #fff; display: block; }
+        .buy-btn { background: var(--tele); color: white; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-size: 0.8rem; display: inline-block; margin-top: 5px; font-weight: bold; }
 
-        .contact-footer {
-            margin-top: 20px;
-            width: 100%;
-            max-width: 500px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .footer-btn {
-            padding: 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            text-align: center;
-            font-weight: bold;
-            color: white;
-        }
+        /* Status Ghost View */
+        .status-container { text-align: center; padding-top: 60px; color: #8b949e; }
+        .ghost { font-size: 50px; margin-bottom: 10px; opacity: 0.4; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div class="brand">DAKU YT 1M Store</div>
-        <div style="font-size: 0.7rem; color: var(--neon-green);">● SERVER ONLINE</div>
+        <div style="color: var(--blue); font-weight: bold; font-style: italic;">FF AUTOMATION HUB</div>
+        <div style="color: var(--green); font-size: 0.7rem; font-weight: bold;">● SERVER ONLINE</div>
     </div>
 
-    <div class="nav-tabs">
-        <div class="tab active">STORE</div>
-        <div class="tab">STATUS</div>
-        <div class="tab">FEED</div>
+    <div class="main-tabs">
+        <div id="btn-glory" class="tab-btn active" onclick="showTab('glory')">🤖 GUILD GLORY</div>
+        <div id="btn-likes" class="tab-btn" onclick="showTab('likes')">💖 AUTO LIKES</div>
+        <div id="btn-status" class="tab-btn" onclick="showTab('status')">⚡ STATUS</div>
     </div>
 
-    <div class="service-section">
-        <div class="section-title">🤖 GUILD GLORY BOT</div>
+    <div id="glory-page" class="content-section active">
+        <div style="color: var(--gold); font-size: 0.75rem; font-weight: bold; margin-bottom: 15px;">GUILD GLORY BOT SERVICES</div>
+        
         <div class="plan-card">
-            <div class="plan-info">
+            <div class="details">
+                <h3>Mini Glory Boost</h3>
+                <p>200k (2 Lakh) Glory Boost</p>
+            </div>
+            <div class="price-tag">
+                <span class="price">₹200</span>
+                <a href="https://t.me/DAKU_YT_1M1" class="buy-btn">ORDER (TELEGRAM)</a>
+            </div>
+        </div>
+
+        <div class="plan-card">
+            <div class="details">
                 <h3>Starter Glory</h3>
-                <p>5 Lakh+ Glory | Anti-Ban Boost</p>
+                <p>500k (5 Lakh) Glory Boost</p>
             </div>
             <div class="price-tag">
-                <div class="price">₹499</div>
-                <a href="https://wa.me/919452318882?text=Buy+5+Lakh+Glory" class="buy-btn">BUY NOW</a>
+                <span class="price">₹800</span>
+                <a href="https://t.me/DAKU_YT_1M1" class="buy-btn">ORDER (TELEGRAM)</a>
             </div>
         </div>
+
         <div class="plan-card">
-            <div class="plan-info">
-                <h3>Elite Glory</h3>
-                <p>10 Lakh+ Glory | Top 1% Guild</p>
+            <div class="details">
+                <h3>Mega Glory Pack</h3>
+                <p>1M (10 Lakh) Glory Boost</p>
             </div>
             <div class="price-tag">
-                <div class="price">₹899</div>
-                <a href="https://wa.me/919452318882?text=Buy+10+Lakh+Glory" class="buy-btn">BUY NOW</a>
+                <span class="price">₹1000</span>
+                <a href="https://t.me/DAKU_YT_1M1" class="buy-btn">ORDER (TELEGRAM)</a>
+            </div>
+        </div>
+
+        <div class="plan-card">
+            <div class="details">
+                <h3>Full Guild Max</h3>
+                <p>Full Guild Glory Match</p>
+            </div>
+            <div class="price-tag">
+                <span class="price">₹1500</span>
+                <a href="https://t.me/DAKU_YT_1M1" class="buy-btn">ORDER (TELEGRAM)</a>
             </div>
         </div>
     </div>
 
-    <div class="service-section">
-        <div class="section-title">💖 PROFILE LIKES (MONTHLY)</div>
+    <div id="likes-page" class="content-section">
+        <div style="color: var(--blue); font-size: 0.75rem; font-weight: bold; margin-bottom: 15px;">MONTHLY LIKE PACKAGES</div>
         <div class="plan-card">
-            <div class="plan-info">
-                <h3>Viral Package</h3>
-                <p>6,000 Likes | 1 Month</p>
-            </div>
-            <div class="price-tag">
-                <div class="price">₹400</div>
-                <a href="https://wa.me/919452318882?text=Buy+6k+Monthly+Likes" class="buy-btn">BUY NOW</a>
-            </div>
+            <div class="details"><h3>Viral Monthly</h3><p>6,000 Likes (1 Month)</p></div>
+            <div class="price-tag"><span class="price">₹400</span><a href="https://t.me/YOUR_TELEGRAM_USERNAME" class="buy-btn">ORDER (TELEGRAM)</a></div>
         </div>
         <div class="plan-card">
-            <div class="plan-info">
-                <h3>VIP Legend</h3>
-                <p>18,000 Likes | 3 Months</p>
-            </div>
-            <div class="price-tag">
-                <div class="price">₹1100</div>
-                <a href="https://wa.me/919452318882?text=Buy+18k+VIP+Likes" class="buy-btn">BUY NOW</a>
-            </div>
+            <div class="details"><h3>VIP Legend</h3><p>18,000 Likes (3 Months)</p></div>
+            <div class="price-tag"><span class="price">₹1100</span><a href="https://t.me/YOUR_TELEGRAM_USERNAME" class="buy-btn">ORDER (TELEGRAM)</a></div>
         </div>
     </div>
 
-    <div class="contact-footer">
-        <a href="https://t.me/DAKU_YT_1M1" class="footer-btn" style="background: #0088cc;">TELEGRAM</a>
-        <a href="https://www.youtube.com/@DAKU_YT_1M_YM" class="footer-btn" style="background: #ff0000;">YOUTUBE</a>
+    <div id="status-page" class="content-section">
+        <div class="status-container">
+            <div class="ghost">👻</div>
+            <p>No active tasks or subscriptions</p>
+        </div>
     </div>
 
+    <script>
+        function showTab(tabName) {
+            document.getElementById('glory-page').style.display = 'none';
+            document.getElementById('likes-page').style.display = 'none';
+            document.getElementById('status-page').style.display = 'none';
+            document.getElementById('btn-glory').classList.remove('active');
+            document.getElementById('btn-likes').classList.remove('active');
+            document.getElementById('btn-status').classList.remove('active');
+
+            document.getElementById(tabName + '-page').style.display = 'block';
+            document.getElementById('btn-' + tabName).classList.add('active');
+        }
+    </script>
 </body>
 </html>
+
     
