@@ -3,128 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAKU YT 1M | FF AUTOMATION</title>
+    <title>DAKU YT | Pro AutoLike Hub</title>
     <style>
-        :root { --bg: #0b0f15; --card: #161b22; --blue: #58a6ff; --green: #238636; --gold: #f0883e; --tele: #0088cc; }
-        body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; padding: 15px; }
-        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
-        
-        /* Navigation Tabs */
-        .main-tabs { display: flex; gap: 10px; margin: 20px 0; }
-        .tab-btn { flex: 1; padding: 15px; border-radius: 12px; border: 1px solid #30363d; background: var(--card); color: #8b949e; cursor: pointer; font-weight: bold; text-align: center; font-size: 0.8rem; }
-        .tab-btn.active { background: #1f2937; color: white; border: 1px solid var(--blue); box-shadow: 0 0 15px rgba(88, 166, 255, 0.2); }
+        :root {
+            --bg-color: #0b1019;
+            --card-bg: #161b22;
+            --blue-glow: #38a1f3;
+            --green-glow: #00ff00;
+            --text-main: #ffffff;
+            --text-dim: #8b949e;
+        }
 
-        /* Content Sections */
-        .content-section { display: none; }
-        .content-section.active { display: block; }
-        
-        .plan-card { background: var(--card); border-radius: 15px; padding: 15px; margin-bottom: 12px; border: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
-        .details h3 { margin: 0; font-size: 1rem; color: #fff; }
-        .details p { margin: 5px 0 0; font-size: 0.75rem; color: #00ff00; font-weight: bold; }
-        
-        .price-tag { text-align: right; }
-        .price { font-size: 1.1rem; font-weight: bold; color: #fff; display: block; }
-        .buy-btn { background: var(--tele); color: white; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-size: 0.8rem; display: inline-block; margin-top: 5px; font-weight: bold; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        /* Status Ghost View */
-        .status-container { text-align: center; padding-top: 60px; color: #8b949e; }
-        .ghost { font-size: 50px; margin-bottom: 10px; opacity: 0.4; }
+        /* --- Header Section (Image 0 match) --- */
+        .header {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #30363d;
+        }
+        .logo-area { font-style: italic; }
+        .logo-main { color: var(--blue-glow); font-weight: 900; font-size: 1.2rem; letter-spacing: 1px; }
+        .server-status { color: var(--green-glow); font-size: 0.7rem; margin-top: 4px; display: block; }
+        .user-id { text-align: right; color: var(--text-dim); font-size: 0.75rem; font-weight: bold; }
+        .user-id span { color: var(--blue-glow); }
+
+        /* --- Flag Section --- */
+        .flags { width: 100%; max-width: 450px; display: flex; gap: 6px; margin: 12px 0; font-size: 1.1rem; }
+
+        /* --- Navigation Tabs (Image 0/3 match) --- */
+        .nav-tabs {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            width: 100%;
+            max-width: 450px;
+            margin: 15px 0;
+        }
+        .tab {
+            background: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 10px 5px;
+            text-align: center;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+        .tab i { display: block; font-size: 1.2rem; margin-bottom: 5px; }
+        .tab.active {
+            background: rgba(56, 161, 243, 0.15);
+            border-color: var(--blue-glow);
+            color: white;
+            box-shadow: 0 0 15px rgba(56, 161, 243, 0.3);
+        }
+
+        /* --- Region/Payment Selectors (Image 3 match) --- */
+        .selectors {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 25px;
+        }
+        .select-item {
+            background: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.8rem;
+            position: relative;
+        }
+        .select-label {
+            position: absolute;
+            top: -8px;
+            left: 10px;
+            background: var(--bg-color);
+            padding: 0 5px;
+            color: var(--text-dim);
+            font-size: 0.6rem;
+            font-weight: bold;
+        }
+
+        /* --- Plan Cards (Image 3/12 match) --- */
+        .plans-container { width: 100%; max-width: 450px; }
+        .section-tag { color: var(--blue-glow); font-size: 0.75rem; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; }
+        
+        .plan-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #30363d;
+            position: relative;
+            transition: 0.2s;
+        }
+        .plan-card:active { transform: scale(0.98); }
+        .days-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--blue-glow);
+            padding: 4px 12px;
+            border-radius: 0 18px 0 18px;
+            font-size: 0.6rem;
+            font-weight: bold;
+        }
+        .crown-icon {
+            width: 45px;
+            height: 45px;
+            background: #1c2128;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--blue-glow);
+            border: 1px solid #30363d;
+        }
+        .plan-info { flex: 1; }
+        .plan-info h3 { margin: 0; font-size: 0.95rem; }
+        .plan-info p { margin: 4px 0 0; font-size: 0.75rem; color: var(--green-glow); font-weight: bold; }
+        .plan-price { font-size: 1.15rem; font-weight: bold; }
+
+        /* --- Status Page (Image 0 match) --- */
+        .status-empty {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+            color: var(--text-dim);
+        }
+        .ghost { font-size: 3.5rem; opacity: 0.2; margin-bottom: 15px; }
+
+        /* --- Contact Button --- */
+        .order-btn {
+            background: #0088cc;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div style="color: var(--blue); font-weight: bold; font-style: italic;">FF AUTOMATION HUB</div>
-        <div style="color: var(--green); font-size: 0.7rem; font-weight: bold;">● SERVER ONLINE</div>
+        <div class="logo-area">
+            <span class="logo-main">FF AUTOLIKE</span>
+            <span class="server-status">● SERVER ONLINE</span>
+        </div>
+        <div class="user-id">SG &lt;/&gt; <span>DAKU YT</span><br>ID: 6829395007</div>
     </div>
 
-    <div class="main-tabs">
-        <div id="btn-glory" class="tab-btn active" onclick="showTab('glory')">🤖 GUILD GLORY</div>
-        <div id="btn-likes" class="tab-btn" onclick="showTab('likes')">💖 AUTO LIKES</div>
-        <div id="btn-status" class="tab-btn" onclick="showTab('status')">⚡ STATUS</div>
+    <div class="flags">🇮🇳 🇱🇰 🇳🇵 🇧🇩 🇵🇰 🇿🇦</div>
+
+    <div class="nav-tabs">
+        <div class="tab active" id="store-tab" onclick="toggleView('store')">🛒<br>STORE</div>
+        <div class="tab" id="status-tab" onclick="toggleView('status')">⚡<br>STATUS</div>
+        <div class="tab">📋<br>ORDERS</div>
+        <div class="tab">🎁<br>FREE</div>
+        <div class="tab">👥<br>FEED</div>
     </div>
 
-    <div id="glory-page" class="content-section active">
-        <div style="color: var(--gold); font-size: 0.75rem; font-weight: bold; margin-bottom: 15px;">GUILD GLORY BOT SERVICES</div>
-        
-        <div class="plan-card">
-            <div class="details">
-                <h3>Mini Glory Boost</h3>
-                <p>200k (2 Lakh) Glory Boost</p>
-            </div>
-            <div class="price-tag">
-                <span class="price">₹200</span>
-                <a href="https://t.me/DAKU_YT_1M1" class="buy-btn">ORDER (TELEGRAM)</a>
-            </div>
+    <div class="selectors">
+        <div class="select-item">
+            <span class="select-label">REGION</span>
+            🇮🇳 INDIA
         </div>
-
-        <div class="plan-card">
-            <div class="details">
-                <h3>Starter Glory</h3>
-                <p>500k (5 Lakh) Glory Boost</p>
-            </div>
-            <div class="price-tag">
-                <span class="price">₹800</span>
-                <a href="https://t.me/DAKU_YT_1M1" class="buy-btn">ORDER (TELEGRAM)</a>
-            </div>
-        </div>
-
-        <div class="plan-card">
-            <div class="details">
-                <h3>Mega Glory Pack</h3>
-                <p>1M (10 Lakh) Glory Boost</p>
-            </div>
-            <div class="price-tag">
-                <span class="price">₹1000</span>
-                <a href="https://t.me/DAKU_YT_1M1" class="buy-btn">ORDER (TELEGRAM)</a>
-            </div>
-        </div>
-
-        <div class="plan-card">
-            <div class="details">
-                <h3>Full Guild Max</h3>
-                <p>Full Guild Glory Match</p>
-            </div>
-            <div class="price-tag">
-                <span class="price">₹1500</span>
-                <a href="https://t.me/DAKU_YT_1M1" class="buy-btn">ORDER (TELEGRAM)</a>
-            </div>
+        <div class="select-item">
+            <span class="select-label">PAYMENT</span>
+            UPI (Ind)
         </div>
     </div>
 
-    <div id="likes-page" class="content-section">
-        <div style="color: var(--blue); font-size: 0.75rem; font-weight: bold; margin-bottom: 15px;">MONTHLY LIKE PACKAGES</div>
+    <div id="store-view" class="plans-container">
+        <div class="section-tag">SELECT PLAN</div>
+
         <div class="plan-card">
-            <div class="details"><h3>Viral Monthly</h3><p>6,000 Likes (1 Month)</p></div>
-            <div class="price-tag"><span class="price">₹400</span><a href="https://t.me/YOUR_TELEGRAM_USERNAME" class="buy-btn">ORDER (TELEGRAM)</a></div>
+            <div class="days-badge">7 DAYS</div>
+            <div class="crown-icon">👑</div>
+            <div class="plan-info">
+                <h3>Weekly Starter</h3>
+                <p>220/Day • 1540 Total Likes</p>
+                <a href="https://t.me/YOUR_TELEGRAM_USERNAME" class="order-btn">ORDER VIA TELEGRAM</a>
+            </div>
+            <div class="plan-price">₹100</div>
         </div>
+
         <div class="plan-card">
-            <div class="details"><h3>VIP Legend</h3><p>18,000 Likes (3 Months)</p></div>
-            <div class="price-tag"><span class="price">₹1100</span><a href="https://t.me/YOUR_TELEGRAM_USERNAME" class="buy-btn">ORDER (TELEGRAM)</a></div>
+            <div class="days-badge">15 DAYS</div>
+            <div class="crown-icon">👑</div>
+            <div class="plan-info">
+                <h3>Pro Booster</h3>
+                <p>220/Day • 3300 Total Likes</p>
+                <a href="https://t.me/YOUR_TELEGRAM_USERNAME" class="order-btn">ORDER VIA TELEGRAM</a>
+            </div>
+            <div class="plan-price">₹170</div>
+        </div>
+
+        <div class="plan-card">
+            <div class="days-badge">30 DAYS</div>
+            <div class="crown-icon">👑</div>
+            <div class="plan-info">
+                <h3>Elite Monthly</h3>
+                <p>220/Day • 6600 Total Likes</p>
+                <a href="https://t.me/YOUR_TELEGRAM_USERNAME" class="order-btn">ORDER VIA TELEGRAM</a>
+            </div>
+            <div class="plan-price">₹300</div>
+        </div>
+
+        <div class="plan-card">
+            <div class="days-badge">90 DAYS</div>
+            <div class="crown-icon">👑</div>
+            <div class="plan-info">
+                <h3>Grandmaster</h3>
+                <p>220/Day • 19800 Total Likes</p>
+                <a href="https://t.me/YOUR_TELEGRAM_USERNAME" class="order-btn">ORDER VIA TELEGRAM</a>
+            </div>
+            <div class="plan-price">₹800</div>
         </div>
     </div>
 
-    <div id="status-page" class="content-section">
-        <div class="status-container">
-            <div class="ghost">👻</div>
-            <p>No active tasks or subscriptions</p>
-        </div>
+    <div id="status-view" class="status-empty">
+        <div class="ghost">👻</div>
+        <p>No active plans</p>
     </div>
 
     <script>
-        function showTab(tabName) {
-            document.getElementById('glory-page').style.display = 'none';
-            document.getElementById('likes-page').style.display = 'none';
-            document.getElementById('status-page').style.display = 'none';
-            document.getElementById('btn-glory').classList.remove('active');
-            document.getElementById('btn-likes').classList.remove('active');
-            document.getElementById('btn-status').classList.remove('active');
+        function toggleView(view) {
+            const store = document.getElementById('store-view');
+            const status = document.getElementById('status-view');
+            const storeTab = document.getElementById('store-tab');
+            const statusTab = document.getElementById('status-tab');
 
-            document.getElementById(tabName + '-page').style.display = 'block';
-            document.getElementById('btn-' + tabName).classList.add('active');
+            if(view === 'store') {
+                store.style.display = 'block';
+                status.style.display = 'none';
+                storeTab.classList.add('active');
+                statusTab.classList.remove('active');
+            } else {
+                store.style.display = 'none';
+                status.style.display = 'flex';
+                storeTab.classList.remove('active');
+                statusTab.classList.add('active');
+            }
         }
     </script>
 </body>
 </html>
-
-    
