@@ -3,187 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAKU YT 1M | OFFICIAL DASHBOARD</title>
+    <title>DAKU YT STORE | OFFICIAL</title>
     <style>
-        :root {
-            --bg: #0b1019;
-            --card: #161b22;
-            --blue: #38a1f3;
-            --green: #00ff00;
-            --text-gray: #8b949e;
-        }
+        :root { --bg: #0b1019; --card: #161b22; --blue: #38a1f3; --green: #00ff00; --modal-bg: #f8f9f5; }
+        body { background-color: var(--bg); color: white; font-family: sans-serif; margin: 0; padding: 15px; }
 
-        body {
-            background-color: var(--bg);
-            color: white;
-            font-family: sans-serif;
-            margin: 0;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        /* Header Branding */
+        .store-header { text-align: center; padding: 15px 0; border-bottom: 2px solid var(--blue); margin-bottom: 15px; }
+        .store-title { color: var(--blue); font-size: 1.8rem; font-weight: bold; text-shadow: 0 0 10px var(--blue); margin: 0; }
 
-        /* Top Branding */
-        .top-header {
-            width: 100%;
-            max-width: 450px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #30363d;
-        }
-        .brand-name { color: var(--blue); font-weight: bold; font-size: 1.2rem; text-shadow: 0 0 10px var(--blue); }
-        .user-info { text-align: right; font-size: 0.7rem; color: var(--text-gray); }
-        .user-info span { color: var(--blue); font-weight: bold; }
+        /* --- Main Page Selector (Guild Glory vs Auto Like) --- */
+        .page-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 15px; border-radius: 12px; border: 1px solid #30363d; background: var(--card); color: #8b949e; cursor: pointer; font-weight: bold; text-align: center; font-size: 0.8rem; }
+        .tab-btn.active { background: #1f2937; color: white; border: 1px solid var(--blue); box-shadow: 0 0 15px rgba(56, 161, 243, 0.2); }
 
-        /* Country Flags */
-        .flags { width: 100%; max-width: 450px; margin: 10px 0; font-size: 1.2rem; display: flex; gap: 8px; }
+        /* Pop-up Selectors (Region & Payment) */
+        .selectors { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .select-trigger { background: var(--card); border: 1px solid #30363d; border-radius: 10px; padding: 12px; font-size: 0.85rem; position: relative; cursor: pointer; }
+        .label { position: absolute; top: -8px; left: 10px; background: var(--bg); padding: 0 5px; font-size: 0.6rem; color: #8b949e; font-weight: bold; }
 
-        /* Navigation Tabs */
-        .nav-tabs {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: 100%;
-            max-width: 450px;
-            margin: 15px 0;
-        }
-        .tab {
-            background: var(--card);
-            border: 1px solid #30363d;
-            border-radius: 12px;
-            padding: 12px;
-            text-align: center;
-            font-size: 0.7rem;
-            font-weight: bold;
-            color: var(--text-gray);
-            cursor: pointer;
-        }
-        .tab.active {
-            background: rgba(56, 161, 243, 0.1);
-            border-color: var(--blue);
-            color: white;
-            box-shadow: 0 0 10px rgba(56, 161, 243, 0.3);
-        }
+        /* Plans Content */
+        .content-page { display: none; }
+        .content-page.active { display: block; }
+        .plan-card { background: var(--card); border-radius: 18px; padding: 18px; margin-bottom: 12px; border: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
+        .price { font-size: 1.2rem; font-weight: bold; }
+        .buy-btn { background: #0088cc; color: white; padding: 7px 15px; border-radius: 8px; text-decoration: none; font-size: 0.75rem; font-weight: bold; display: inline-block; }
 
-        /* Region & Payment Selectors */
-        .selectors {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            width: 100%;
-            max-width: 450px;
-            margin-bottom: 20px;
-        }
-        .select-box {
-            background: var(--card);
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 0.8rem;
-            position: relative;
-        }
-        .label {
-            position: absolute;
-            top: -8px;
-            left: 8px;
-            background: var(--bg);
-            padding: 0 5px;
-            font-size: 0.6rem;
-            color: var(--text-gray);
-        }
-
-        /* Service Cards */
-        .content-view { display: none; width: 100%; max-width: 450px; }
-        .content-view.active { display: block; }
-        .plan-card {
-            background: var(--card);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 12px;
-            border: 1px solid #30363d;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-        .badge { position: absolute; top: 0; right: 0; background: var(--blue); padding: 3px 10px; border-radius: 0 15px 0 15px; font-size: 0.6rem; font-weight: bold; }
-        .plan-details h3 { margin: 0; font-size: 0.9rem; }
-        .plan-details p { margin: 5px 0 0; font-size: 0.75rem; color: var(--green); font-weight: bold; }
-        .price { font-size: 1.1rem; font-weight: bold; }
-        .buy-btn { background: #0088cc; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.7rem; font-weight: bold; display: inline-block; margin-top: 8px; }
-
-        /* Status Ghost */
-        .status-ghost { text-align: center; padding-top: 80px; opacity: 0.3; }
+        /* Modals (Pop-ups) */
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 100; }
+        .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--modal-bg); color: black; width: 85%; max-width: 350px; border-radius: 25px; padding: 10px; z-index: 200; }
+        .modal-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #ddd; cursor: pointer; }
+        .radio-dot { width: 18px; height: 18px; border: 2px solid #555; border-radius: 50%; }
     </style>
 </head>
 <body>
 
-    <div class="top-header">
-        <div class="brand-name">DAKU YT 1M</div>
-        <div class="user-info">SG &lt;/&gt; <span>ONLINE</span><br>ID: 6829395007</div>
+    <div class="store-header">
+        <h1 class="store-title">DAKU YT STORE</h1>
     </div>
 
-    <div class="flags">🇮🇳 🇱🇰 🇳🇵 🇧🇩 🇵🇰</div>
-
-    <div class="nav-tabs">
-        <div class="tab active" id="glory-tab" onclick="showTab('glory')">🤖 GLORY</div>
-        <div class="tab" id="likes-tab" onclick="showTab('likes')">💖 LIKES</div>
-        <div class="tab" id="status-tab" onclick="showTab('status')">⚡ STATUS</div>
+    <div class="page-tabs">
+        <div id="tab-glory" class="tab-btn active" onclick="switchPage('glory')">🤖 GUILD GLORY</div>
+        <div id="tab-likes" class="tab-btn" onclick="switchPage('likes')">💖 AUTO LIKES</div>
     </div>
 
     <div class="selectors">
-        <div class="select-box"><span class="label">REGION</span>🇮🇳 INDIA</div>
-        <div class="select-box"><span class="label">PAYMENT</span>UPI (Secure)</div>
-    </div>
-
-    <div id="glory-view" class="content-view active">
-        <div class="plan-card">
-            <div class="badge">BOT</div>
-            <div class="plan-details"><h3>Mini Glory</h3><p>200k Glory Boost</p><a href="https://t.me/DakuYT1M" class="buy-btn">DM TO BUY</a></div>
-            <div class="price">₹200</div>
+        <div class="select-trigger" onclick="openModal('regionModal')">
+            <span class="label">REGION</span>
+            <span id="currentRegion">🇮🇳 INDIA</span>
         </div>
-        <div class="plan-card">
-            <div class="badge">BOT</div>
-            <div class="plan-details"><h3>Mega Glory</h3><p>1M Glory Boost</p><a href="https://t.me/DakuYT1M" class="buy-btn">DM TO BUY</a></div>
-            <div class="price">₹1000</div>
-        </div>
-        <div class="plan-card">
-            <div class="badge">MAX</div>
-            <div class="plan-details"><h3>Full Guild</h3><p>Full Glory Match</p><a href="https://t.me/DakuYT1M" class="buy-btn">DM TO BUY</a></div>
-            <div class="price">₹1500</div>
+        <div class="select-trigger" onclick="openModal('paymentModal')">
+            <span class="label">PAYMENT</span>
+            <span id="currentPayment">UPI (Ind)</span>
         </div>
     </div>
 
-    <div id="likes-view" class="content-view">
+    <div id="glory-page" class="content-page active">
         <div class="plan-card">
-            <div class="badge">7 DAYS</div>
-            <div class="plan-details"><h3>Weekly Starter</h3><p>1540 Total Likes</p><a href="https://t.me/DakuYT1M" class="buy-btn">DM TO BUY</a></div>
-            <div class="price">₹100</div>
+            <div><h3>Mini Glory</h3><p>200k Glory Boost</p></div>
+            <div style="text-align:right;"><span class="price">₹200</span><br><a href="https://t.me/YOUR_TELEGRAM" class="buy-btn">BUY DM</a></div>
         </div>
         <div class="plan-card">
-            <div class="badge">30 DAYS</div>
-            <div class="plan-details"><h3>Elite Monthly</h3><p>6600 Total Likes</p><a href="https://t.me/DakuYT1M" class="buy-btn">DM TO BUY</a></div>
-            <div class="price">₹300</div>
+            <div><h3>Mega Glory</h3><p>1M Glory Boost</p></div>
+            <div style="text-align:right;"><span class="price">₹1000</span><br><a href="https://t.me/YOUR_TELEGRAM" class="buy-btn">BUY DM</a></div>
         </div>
     </div>
 
-    <div id="status-view" class="content-view">
-        <div class="status-ghost">
-            <div style="font-size: 60px;">👻</div>
-            <p>No active plans for DAKU YT 1M</p>
+    <div id="likes-page" class="content-page">
+        <div class="plan-card">
+            <div><h3>Weekly Starter</h3><p>1540 Total Likes</p></div>
+            <div style="text-align:right;"><span class="price">₹100</span><br><a href="https://t.me/YOUR_TELEGRAM" class="buy-btn">BUY DM</a></div>
         </div>
+        <div class="plan-card">
+            <div><h3>Elite Monthly</h3><p>6600 Total Likes</p></div>
+            <div style="text-align:right;"><span class="price">₹300</span><br><a href="https://t.me/YOUR_TELEGRAM" class="buy-btn">BUY DM</a></div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeAll()"></div>
+    <div class="modal" id="regionModal">
+        <div class="modal-item" onclick="selectRegion('🇧🇷 BRAZIL')"><span>🇧🇷 BRAZIL</span><span class="radio-dot"></span></div>
+        <div class="modal-item" onclick="selectRegion('🇺🇸 USA')"><span>🇺🇸 USA</span><span class="radio-dot"></span></div>
+        <div class="modal-item" onclick="selectRegion('🇮🇳 INDIA')"><span>🇮🇳 INDIA</span><span class="radio-dot"></span></div>
+    </div>
+    <div class="modal" id="paymentModal">
+        <div class="modal-item" onclick="selectPayment('UPI (Ind)')"><span>UPI (Ind)</span><span class="radio-dot"></span></div>
+        <div class="modal-item" onclick="selectPayment('BINANCE ($)')"><span>BINANCE ($)</span><span class="radio-dot"></span></div>
     </div>
 
     <script>
-        function showTab(name) {
-            document.querySelectorAll('.content-view').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(name + '-view').classList.add('active');
-            document.getElementById(name + '-tab').classList.add('active');
+        function switchPage(page) {
+            document.getElementById('glory-page').style.display = (page === 'glory') ? 'block' : 'none';
+            document.getElementById('likes-page').style.display = (page === 'likes') ? 'block' : 'none';
+            document.getElementById('tab-glory').classList.toggle('active', page === 'glory');
+            document.getElementById('tab-likes').classList.toggle('active', page === 'likes');
         }
+        function openModal(id) {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById(id).style.display = 'block';
+        }
+        function closeAll() {
+            document.getElementById('overlay').style.display = 'none';
+            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+        }
+        function selectRegion(val) { document.getElementById('currentRegion').innerText = val; closeAll(); }
+        function selectPayment(val) { document.getElementById('currentPayment').innerText = val; closeAll(); }
     </script>
 </body>
-</html>
+                                                                                                              </html>
+                                                                                                              
